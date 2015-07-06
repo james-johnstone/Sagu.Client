@@ -16,6 +16,7 @@
 
           <div class="game-area">
             <div class="player">
+              {{explorer.name}}
             </div>
           </div>
 
@@ -25,8 +26,9 @@
 
         <div class="col-md-6 game-panel">
           <nav class="navbar navbar-default">
+            Area : {{currentArea}}
           </nav>
-
+          <button ng-click="dosomething()">BUTTON</button>
           <div class="progress">
           </div>
           <div class="well map-container">
@@ -35,8 +37,13 @@
       </div>
     </div>
     <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-resource/angular-resource.min.js"></script>
     <script scr="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../assets/js/app.js"></script>
-    <script src="../assets/js/saguController.js"></script>
+    <script src="../assets/js/resources/explorerResource.js"></script>
+    <script src="../assets/js/resources/areaResource.js"></script>
+    <script src="../assets/js/resources/exploredAreaResource.js"></script>
+    <script src="../assets/js/services/explorerService.js"></script>
+    <script src="../assets/js/controllers/saguController.js"></script>
 </body>
 </html>

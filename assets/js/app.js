@@ -1,1 +1,1 @@
-var saguApp = angular.module('saguApp', []);
+var saguApp = angular.module('saguApp', ['ngResource']);
