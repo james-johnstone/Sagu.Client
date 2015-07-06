@@ -4,13 +4,38 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Sagu</title>
-    <link href="../assets/bower_components/bootstrap/dist/css/bootstrap.css"  rel="stylesheet" />
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.css"  rel="stylesheet" />
+    <link href="../assets/css/app.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="container">
+    <div class="container game-container">
+      <div class="row">
+        <div class="col-md-6 user-panel">
+          <nav class="navbar navbar-default">
+          </nav>
+
+          <div class="game-area">
+            <div class="player">
+            </div>
+          </div>
+
+          <div class="well naration-container">
+          </div>
+        </div>
+
+        <div class="col-md-6 game-panel">
+          <nav class="navbar navbar-default">
+          </nav>
+
+          <div class="progress">
+          </div>
+          <div class="well map-container">
+          </div>
+        </div>
+      </div>
     </div>
-    <script src="../assets/node_modules/angular/angular.js"></script>
-    <script scr="../assets/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script scr="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../assets/js/app.js"></script>
 </body>
 </html>
