@@ -6,6 +6,7 @@ ls
 # Packages
 packages/
 node_modules/
+bower_components/
 
 # Log & Bak files
 *.[Ll]og
@@ -78,7 +79,7 @@ StyleCop.Cache
 *.ncrunch*
 .*crunch*.local.xml
 
-# Installshield output folder 
+# Installshield output folder
 [Ee]xpress
 
 # Click-Once directory
