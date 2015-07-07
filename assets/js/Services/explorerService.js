@@ -33,7 +33,7 @@ angular.module('saguApp').factory('explorerService', function ($q, $cookieStore,
 
     explorerService.getNextArea = function (explorer) {
         explorerService.updateExploredAreas(explorer);
-        
+
         return areaResource.query().$promise
             .then(function (areas) {
             return explorerService.creareNewAreaToExplore(areas, explorer.exploredAreas, explorer);
@@ -43,6 +43,10 @@ angular.module('saguApp').factory('explorerService', function ($q, $cookieStore,
     explorerService.creareNewAreaToExplore = function (areas, exploredAreas, explorer) {
         var defer = $q.defer();
         var nextArea = explorerService.getNextUnexploredArea(areas, exploredAreas);
+
+        if (!nextArea)
+          return;
+
         var areaToExplore = {
             area: nextArea,
             explorerId: explorer.id,

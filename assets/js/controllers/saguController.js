@@ -20,9 +20,13 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
             $scope.init();
         } else {
             explorerService.getNextArea($scope.explorer).then(function (area) {
+              if (!!area){
                 $scope.currentArea = area;
                 $scope.explorer.exploredAreas.push(area);
                 $scope.init();
+              }
+              else
+                $scope.switchArea(Array.maxObject($scope.explorer.exploredAreas, "area", "order"));
             });
         }
     }
@@ -40,7 +44,7 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
             $scope.exploreProgress += 15;
         }
 
-        $timeout($scope.explore, 15000);
+        $timeout($scope.explore, 1500);
     }
 
     $scope.switchArea = function(area){
