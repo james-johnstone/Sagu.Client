@@ -3,6 +3,7 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
     $scope.currentArea;
     $scope.exploreProgress = 0;
     $scope.map = '';
+    $scope.backgroundImage;
 
     explorerService.getExplorer().then(function (explorer) {
         $scope.explorer = explorer;
@@ -25,6 +26,7 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
     });
 
     $scope.init = function(){
+      $scope.backgroundImage = $scope.getImageUri($scope.currentArea.area.image);
       $scope.map = $scope.getMap();
       $scope.explore();
     }
@@ -70,5 +72,10 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
     $scope.updateContainerScroll = function(){
       var container = document.getElementsByClassName('map-container')[0];
       container.scrollTop = container.scrollHeight;
+    }
+
+    $scope.getImageUri = function(image){
+      var fileName =  image.fileName.split('.');
+      return image.id + '.' + fileName[fileName.length -1];
     }
 });

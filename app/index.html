@@ -34,7 +34,10 @@
                   <span class="sr-only">{{exploreProgress}}% Complete</span>
             </div>
           </div>
-          <div class="well map-container" ng-bind-html="map">
+          <div class="well map-container">
+            <img ng-src="http://saguapi.james.g.e/images/{{backgroundImage}}" alt="Background" />
+            <span ng-bind-html="map">
+            </span>
           </div>
         </div>
       </div>
