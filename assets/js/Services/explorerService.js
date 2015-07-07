@@ -1,6 +1,27 @@
-angular.module('saguApp').factory('explorerService', function ($q, areaResource, exploredAreaResource) {
+angular.module('saguApp').factory('explorerService', function ($q, $cookieStore, explorerResource, areaResource, exploredAreaResource) {
 
     var explorerService = {};
+
+    explorerService.getExplorer = function(){
+      var defer = $q.defer();
+
+      var explorer = $cookieStore.get('explorer');
+
+      if (!!explorer)
+        defer.resolve(explorer);
+      else
+         explorerResource.get({id: '59febafa-7435-432d-8f54-bde4484b1b01'},
+                                function(explorer){
+                                   explorerService.updateLocalExplorer(explorer);
+                                   defer.resolve(explorer);
+                                  });
+
+      return defer.promise;
+    };
+
+    explorerService.updateLocalExplorer = function(explorer){
+      $cookieStore.put('explorer', explorer);
+    };
 
     explorerService.getNextArea = function (explorer) {
 
