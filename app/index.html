@@ -29,14 +29,19 @@
             Area : {{currentArea.area.name}} {{currentArea.amountExplored}}
           </nav>
           <div class="progress">
+            <div ng-class="'progress-bar progress-bar-' + (exploreProgress > 50 ? 'success' : 'info')" role="progressbar"
+                  aria-valuenow="{{exploreProgress}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( exploreProgress + '%' ) }">
+                  <span class="sr-only">{{exploreProgress}}% Complete</span>
+            </div>
           </div>
-          <div class="well map-container">
+          <div class="well map-container" ng-bind-html="map">
           </div>
         </div>
       </div>
     </div>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="../node_modules/angular-resource/angular-resource.min.js"></script>
+    <script src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
     <script scr="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="../assets/js/app.js"></script>
     <script src="../assets/js/resources/explorerResource.js"></script>

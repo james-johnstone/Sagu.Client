@@ -1,4 +1,4 @@
-var saguApp = angular.module('saguApp', ['ngResource']);
+var saguApp = angular.module('saguApp', ['ngResource', 'ngSanitize']);
 
 Array.minObject = function (array, prop) {
     var values = array.filter(function (el) {

@@ -1,6 +1,8 @@
-angular.module('saguApp').controller('saguController', function ($scope, explorerResource, explorerService) {
+angular.module('saguApp').controller('saguController', function ($scope, $timeout, explorerResource, explorerService) {
 
     $scope.currentArea;
+    $scope.exploreProgress = 0;
+    $scope.map = '';
 
     $scope.explorer = explorerResource.get({
         id: '59febafa-7435-432d-8f54-bde4484b1b01'
@@ -12,17 +14,56 @@ angular.module('saguApp').controller('saguController', function ($scope, explore
 
         if (unCompletedAreas.length > 0) {
             $scope.currentArea = Array.maxObject(unCompletedAreas, "area", "order");
-            $scope.explore();
+            $scope.init();
         }
         else {
             explorerService.getNextArea(explorer).then(function (area) {
                 $scope.currentArea = area;
-                $scope.explore();
+                $scope.init();
             });
         }
     });
 
-    $scope.explore = function(){
+    $scope.init = function(){
+      $scope.map = $scope.getMap();
+      $scope.explore();
+    }
 
+    $scope.explore = function(){
+      if ( $scope.exploreProgress >= 100){
+          $scope.addNewRoom();
+        }
+      else {
+        $scope.exploreProgress +=15;
+      }
+
+      $timeout($scope.explore, 1000);
     };
+
+    $scope.addNewRoom = function(){
+      $scope.currentArea.amountExplored ++;
+      $scope.exploreProgress = 0;
+      $scope.map += $scope.getRoom();
+
+      $scope.updateContainerScroll();
+    }
+
+    $scope.getMap = function(){
+      var map = '';
+
+      for (var i = 0; i < $scope.currentArea.amountExplored + 5; i++) {
+        map += $scope.getRoom();
+      }
+
+      return map;
+    }
+
+    $scope.getRoom = function(){
+      return "<div class='room'>//</div>";
+    }
+
+    $scope.updateContainerScroll = function(){
+      var container = document.getElementsByClassName('map-container')[0];
+      container.scrollTop = container.scrollHeight;
+    }
 });
