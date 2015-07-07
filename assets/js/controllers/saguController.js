@@ -7,23 +7,26 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
 
     explorerService.getExplorer().then(function (explorer) {
         $scope.explorer = explorer;
-
-        var unCompletedAreas = explorer.exploredAreas.filter(function (area) {
-            return area.amountExplored < area.area.size;
-        });
-
-        if (unCompletedAreas.length > 0) {
-            $scope.currentArea = Array.maxObject(unCompletedAreas, "area", "order");
-            $scope.init();
-        }
-        else {
-            explorerService.getNextArea(explorer).then(function (area) {
-                $scope.currentArea = area;
-                explorer.exploredAreas.push(area);
-                $scope.init();
-            });
-        }
+        $scope.getNextArea();
     });
+
+    $scope.getNextArea = function(){
+      var unCompletedAreas = $scope.explorer.exploredAreas.filter(function (area) {
+          return area.amountExplored < area.area.size;
+      });
+
+      if (unCompletedAreas.length > 0) {
+          $scope.currentArea = Array.maxObject(unCompletedAreas, "area", "order");
+          $scope.init();
+      }
+      else {
+          explorerService.getNextArea($scope.explorer).then(function (area) {
+              $scope.currentArea = area;
+              $scope.explorer.exploredAreas.push(area);
+              $scope.init();
+          });
+      }
+    }
 
     $scope.init = function(){
       $scope.backgroundImage = $scope.getImageUri($scope.currentArea.area.image);
@@ -39,15 +42,20 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
         $scope.exploreProgress +=15;
       }
 
-      $timeout($scope.explore, 1000);
+      $timeout($scope.explore, 1500);
     };
 
     $scope.addNewRoom = function(){
       $scope.updateExploredAmount();
 
-      $scope.exploreProgress = 0;
-      $scope.map += $scope.getRoom();
-      $scope.updateContainerScroll();
+      if ($scope.currentArea.amountExplored >= $scope.currentArea.area.size ){
+        $scope.getNextArea();
+      }
+      else {
+        $scope.exploreProgress = 0;
+        $scope.map += $scope.getRoom();
+        $scope.updateContainerScroll();
+      }
     }
 
     $scope.updateExploredAmount = function(){

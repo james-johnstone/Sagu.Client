@@ -23,18 +23,20 @@ angular.module('saguApp').factory('explorerService', function ($q, $cookieStore,
       $cookieStore.put('explorer', explorer);
     };
 
+    explorerService.updateExploredAreas = function(explorer){
+      var exploredAreas = explorer.exploredAreas;
+
+      for (var i = 0; i < exploredAreas.length; i++) {
+        exploredAreaResource.update(exploredAreas[i].id,exploredAreas[i]);
+      }
+    }
+
     explorerService.getNextArea = function (explorer) {
-
-        var promises = {
-            areas: areaResource.query().$promise,
-            exploredAreas: exploredAreaResource.query({
-                explorerId: explorer.id
-            }).$promise
-        };
-
-        return $q.all(promises)
-            .then(function (values) {
-            return explorerService.creareNewAreaToExplore(values.areas, values.exploredAreas, explorer);
+        explorerService.updateExploredAreas(explorer);
+        
+        return areaResource.query().$promise
+            .then(function (areas) {
+            return explorerService.creareNewAreaToExplore(areas, explorer.exploredAreas, explorer);
         });
     };
 
@@ -65,7 +67,7 @@ angular.module('saguApp').factory('explorerService', function ($q, $cookieStore,
             return ex.area.id
         });
         var unExploredAreas = areas.filter(function (area) {
-            return exploredAreas.indexOf(area.id) === -1;
+            return completedAreas.indexOf(area.id) === -1;
         });
 
         return Array.minObject(unExploredAreas, 'order');

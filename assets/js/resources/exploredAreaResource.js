@@ -9,7 +9,8 @@ angular.module('saguApp').factory('exploredAreaResource', function ($resource) {
                 explorerId: '@explorerId'
             },
             url: 'http://saguapi.james.g.e/api/explorers/:explorerId/exploredAreas'
-        }
+        },
+        update: { method:'PUT' }
     });
 
     return exploredAreaResource;
