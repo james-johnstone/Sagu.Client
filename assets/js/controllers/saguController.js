@@ -1,20 +1,28 @@
-angular.module('saguApp').controller('saguController', function($scope, explorerResource, explorerService){
+angular.module('saguApp').controller('saguController', function ($scope, explorerResource, explorerService) {
 
-  $scope.currentArea;
+    $scope.currentArea;
 
-  $scope.explorer = explorerResource.get({id: '59febafa-7435-432d-8f54-bde4484b1b01'}, function(explorer){
+    $scope.explorer = explorerResource.get({
+        id: '59febafa-7435-432d-8f54-bde4484b1b01'
+    }, function (explorer) {
 
-    var unCompletedAreas = explorer.exploredAreas.filter(function(area){
-      return area.amountExplored < 100;
+        var unCompletedAreas = explorer.exploredAreas.filter(function (area) {
+            return area.amountExplored < area.area.size;
+        });
+
+        if (unCompletedAreas.length > 0) {
+            $scope.currentArea = Array.maxObject(unCompletedAreas, "area", "order");
+            $scope.explore();
+        }
+        else {
+            explorerService.getNextArea(explorer).then(function (area) {
+                $scope.currentArea = area;
+                $scope.explore();
+            });
+        }
     });
 
-    if (unCompletedAreas.length > 0){
+    $scope.explore = function(){
 
-    }
-    else{
-        explorerService.getNextArea(explorer).then(function(area){
-          $scope.currentArea = area;
-        });
-      }
-  });
+    };
 });
