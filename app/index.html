@@ -26,7 +26,22 @@
 
         <div class="col-md-6 game-panel">
           <nav class="navbar navbar-default">
-            Area : {{currentArea.area.name}} {{currentArea.amountExplored}}
+            <p class="navbar-text">Exploring : {{currentArea.area.name}} {{currentArea.amountExplored}}</p>
+
+            <ul class="nav navbar-nav navbar-right">
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Areas <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="exploredArea in explorer.exploredAreas">
+                  <a href="#" ng-click="switchArea(exploredArea)">{{exploredArea.area.name}}</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
           </nav>
           <div class="progress">
             <div ng-class="'progress-bar progress-bar-' + (exploreProgress > 50 ? 'success' : 'info')" role="progressbar"
@@ -46,7 +61,8 @@
     <script src="../node_modules/angular-resource/angular-resource.min.js"></script>
     <script src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="../node_modules/angular-cookies/angular-cookies.min.js"></script>
-    <script scr="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/bootstrap/js/dropdown.js"></script>
     <script src="../assets/js/app.js"></script>
     <script src="../assets/js/resources/explorerResource.js"></script>
     <script src="../assets/js/resources/areaResource.js"></script>

@@ -40,8 +40,14 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
             $scope.exploreProgress += 15;
         }
 
-        $timeout($scope.explore, 1500);
-    };
+        $timeout($scope.explore, 15000);
+    }
+
+    $scope.switchArea = function(area){
+      area.amountExplored = 0;
+      $scope.currentArea = area;
+      $scope.init();
+    }
 
     $scope.addNewRoom = function () {
         $scope.updateExploredAmount();
