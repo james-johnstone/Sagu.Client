@@ -10,13 +10,26 @@ angular.module('saguApp').factory('explorerService', function ($q, $cookieStore,
       if (!!explorer)
         defer.resolve(explorer);
       else
-         explorerResource.get({id: '59febafa-7435-432d-8f54-bde4484b1b01'},
-                                function(explorer){
+        explorerService.createExplorer({Name : 'new explorer'}).then(function(explorer){
                                    explorerService.updateLocalExplorer(explorer);
                                    defer.resolve(explorer);
                                   });
 
       return defer.promise;
+    };
+
+    explorerService.createExplorer = function(explorer){
+       var defer = $q.defer();
+       var newExplorer = new explorerResource();
+
+       angular.extend(newExplorer, explorer);
+
+       newExplorer.$save().then(function (explorer) {
+                defer.resolve(explorer);
+            }, function (response) {
+                defer.reject(response.data.reason);
+            });
+            return defer.promise;
     };
 
     explorerService.updateLocalExplorer = function(explorer){

@@ -90,6 +90,8 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
     }
 
     $scope.getImageUri = function (image) {
+      if (!image)
+          return;
         var fileName = image.fileName.split('.');
         return image.id + '.' + fileName[fileName.length - 1];
     }
