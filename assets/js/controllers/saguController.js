@@ -40,11 +40,15 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
     $scope.explore = function () {
         if ($scope.exploreProgress >= 100) {
             $scope.addNewRoom();
+            $scope.explorer.currentExperience += 10;
+
+            if ($scope.getExperiencePercentage($scope.explorer) >= 100)
+              $scope.explorerLevelup();
         } else {
-            $scope.exploreProgress += 15;
+            $scope.exploreProgress += (Math.pow(5,Math.log10($scope.explorer.level)) + 4);
         }
 
-        $timeout($scope.explore, 1500);
+        $timeout($scope.explore, 1000);
     }
 
     $scope.switchArea = function(area){
@@ -68,6 +72,11 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
     $scope.updateExploredAmount = function () {
         $scope.currentArea.amountExplored++;
         explorerService.updateLocalExplorer($scope.explorer);
+    }
+
+    $scope.explorerLevelup = function(){
+      $scope.explorer.level ++;
+      $scope.explorer.currentExperience = 0;
     }
 
     $scope.getMap = function () {
@@ -95,4 +104,20 @@ angular.module('saguApp').controller('saguController', function ($scope, $timeou
         var fileName = image.fileName.split('.');
         return image.id + '.' + fileName[fileName.length - 1];
     }
+
+
+        $scope.getExperiencePercentage = function(explorer){
+          if (!explorer) return;
+
+          return (explorer.currentExperience / $scope.getExperienceRequired(explorer)) * 100
+        };
+
+        $scope.getExperienceRequired = function(explorer){
+          var base = 1000;
+
+          return base * (Math.log2(explorer.level) + 1)
+        };
+
+
+
 });

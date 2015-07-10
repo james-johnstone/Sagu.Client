@@ -13,13 +13,27 @@
 <body>
     <div class="container game-container" ng-controller="saguController">
       <div class="row">
-        <div class="col-md-6 user-panel">
+        <div class="col-sm-6 user-panel">
           <nav class="navbar navbar-default">
           </nav>
 
           <div class="game-area well">
             <div class="player">
-              {{explorer.name}}
+              <blockquote>
+                {{explorer.name}}
+              </blockquote>
+
+              <div class="lead">
+                level {{explorer.level}}
+
+                <div class="progress">
+                  <div ng-class="'progress-bar progress-bar-success'" role="progressbar"
+                        aria-valuenow="{{getExperiencePercentage(explorer)}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( getExperiencePercentage(explorer) + '%' ) }">
+                        <span class="sr-only">{{getExperiencePercentage(explorer)}}% Complete</span>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
 
@@ -27,7 +41,7 @@
           </div>
         </div>
 
-        <div class="col-md-6 game-panel">
+        <div class="col-sm-6 game-panel">
           <nav class="navbar navbar-default">
             <p class="navbar-text">Exploring : {{currentArea.area.name}} {{currentArea.amountExplored}}</p>
 
